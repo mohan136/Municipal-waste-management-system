@@ -1,0 +1,37 @@
+*{
+    box-sizing: border-box;
+}
+html,body{
+    height:100%;
+    margin:0;
+}
+#navbar{
+    padding-top:80px;
+    width:250px;
+    height:100%;
+    text-align: center;
+    background-color: black;
+    margin:10px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    float:left;
+    position:fixed;
+    border-radius:5px;
+}
+#navbar a{
+    background-color: rgb(71, 67, 67);
+    display: block;
+    text-decoration: none;
+    color:white;
+    margin:10px;
+    border-radius:5px;
+    padding:20px 0;
+    transition-duration: 1s;
+}
+#navbar a:hover{
+    margin-right:0;
+}
+#content{
+    float:left;
+    width:1105px;
+    margin-left:260px;
+}

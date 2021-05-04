@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <title>Status</title>
+    <link rel="stylesheet" type="text/css" href="statusstyle.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+</head>
+<body onload="first()">
+    <div id="navbar">
+        <a onclick="changeDisplay(1)">Trucks Status</a>
+        <a onclick="changeDisplay(2)">Streets Information</a>
+        <a onclick="changeDisplay(3)">Complaints</a>
+    </div>
+    <div id="content">
+        
+    </div>
+    <script>
+        function first(){
+            $("#content").load("streetinfo.php");
+        }
+        function changeDisplay(n){
+            var dp=document.getElementById("content");
+            if(n==1){
+                $("#content").load("truckstatus.php");
+            }
+            else if(n==2){
+                $("#content").load("streetinfo.php");
+            }
+            else{
+                $("#content").load("complaintinfo.php");
+            }
+        }
+    </script>
+</body>
