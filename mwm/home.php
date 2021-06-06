@@ -1,5 +1,5 @@
 <?php
-    $mysqli=new mysqli('localhost','root','Charan@31','municipal_waste_management');
+    $mysqli=new mysqli('localhost','root','Rohitha@123','municipal_waste_management');
     if ($mysqli->connect_error) {
         die('Connect Error (' . 
         $mysqli->connect_errno . ') '. 
@@ -11,6 +11,8 @@
     $result=$mysqli->query($sql);
     $rows=$result->fetch_assoc();
     }
+    $sql="select street_name from street_info";
+   $result1=$mysqli->query($sql);
     $mysqli->close();
 ?>
 <!DOCTYPE html>
@@ -28,7 +30,7 @@
         </div>
         <nav>
             <ul>
-                <li> <a href="home.php">Home</a></li>
+                
                 <li> <a href="login.php">Login</a></li>
                 <li> <a href="complaints.php">complaint </a></li>
                 <li> <a href="request.php">Request </a></li>
@@ -44,7 +46,15 @@
     <div id="showinfo">
         <h1>You can check next cleaing date for your area here.</h1>
         <form action="home.php" method="POST">
-            <input type="text" placheholder="Enter Your location" name="location" required >
+        <select style="font-size:20px;" name="location" id="area" required>
+                    <?php 
+                         while($row=mysqli_fetch_assoc($result1)){
+                    ?>
+                         <option value="<?php echo $row['street_name'] ?>"> <?php echo $row['street_name'] ?> </option>
+                    <?php
+                         }
+                    ?>
+                </select>
             <input type="submit" value="Go">
                 <div id="date">
                     <?php

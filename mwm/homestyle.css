@@ -187,7 +187,7 @@ footer{
   font-size:20px;
   font-weight: lighter;
 }
-#showinfo form input[type=text]{
+#showinfo form #area{
   display:inline;
   height:40px;
   width:40%;

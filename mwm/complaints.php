@@ -1,5 +1,5 @@
 <?php
-   $con=mysqli_connect('localhost','root','Charan@31','municipal_waste_management');
+   $con=mysqli_connect('localhost','root','Rohitha@123','municipal_waste_management');
    if(isset($_POST["c_name"])){
    $c_name=$_POST["c_name"];
    $c_aadhaar=$_POST["c_aadhaar"];
@@ -15,12 +15,15 @@
          $sql="insert into complaints values('$c_name','$c_aadhaar','$c_phn','$area')";
          mysqli_query($con,$sql);
        }
+         echo '<script>alert("Your request is recorded, we will solve it ASAP");</script>';
    }
    else{
      echo '<script>alert("Please enter valid aadhaar details");</script>';
    }
    mysqli_free_result($res);
    }
+   $sql="select street_name from street_info";
+   $result1=mysqli_query($con,$sql);
    mysqli_close($con);
 ?>
 <!DOCTYPE html>
@@ -50,11 +53,12 @@
             display:inline;
             font-size:20px;
         }
-        input{
+        select{
             height: 30px;
             width:250px;
             border-radius:5px;
         }
+        
         input[type=submit]{
             margin-left:10px;
             margin-top:10px;
@@ -74,6 +78,7 @@
 </head>
 <body>
     <div clsss="main">
+        <a href="home.php"><i style="margin-left:40px; font-size:40px;margin-top:50px;"class="fa fa-arrow-circle-left" ></i></a>
         <form action="complaints.php" method="POST" target="_self" onsubmit="return check_details();">
             <div class="content">
             <i class="fa fa-user-circle-o"></i>
@@ -96,7 +101,15 @@
             <div class="content">
                 <i class="fa fa-map-marker"></i>
                 <p>Area</p><br>
-                <input type="text" name="area" id="area" required>
+                <select name="area" id="area" required>
+                    <?php 
+                         while($row=mysqli_fetch_assoc($result1)){
+                    ?>
+                         <option value="<?php echo $row['street_name'] ?>"> <?php echo $row['street_name'] ?> </option>
+                    <?php
+                         }
+                    ?>
+                </select>
             </div>
             <div class="content">
                 <p>Please enter the details that are linked to given aadhaar num.</p>

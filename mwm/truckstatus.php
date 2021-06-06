@@ -1,12 +1,14 @@
 <?php
-    $mysqli=new mysqli('localhost','root','Charan@31','municipal_waste_management');
+    $mysqli=new mysqli('localhost','root','Rohitha@123','municipal_waste_management');
     if ($mysqli->connect_error) {
         die('Connect Error (' . 
         $mysqli->connect_errno . ') '. 
         $mysqli->connect_error);
     }
-    $sql="select * from complaints";
-    $result=$mysqli->query($sql);
+    $sql="select street_name from street_info where next_date = current_date";
+    $result1=$mysqli->query($sql);
+    $sql="select street_name from street_info where next_date = date_add(current_date ,interval 7 day)";
+    $result2 = $mysqli->query($sql);
     $mysqli->close();
 ?>
 <!DOCTYPE html>
@@ -46,30 +48,68 @@
             width:70px;
             height:20px;
         }
+        #deassign{
+            display:none;
+        }
     </style>
 </head>
 <body>
     <div>
         <table>
             <tr>
-                <th>Truck Number</th>
                 <th>Area</th>
                 <th>Status</th>
             </tr>
             <?php
-                while($rows=$result->fetch_assoc())
+                if($result1->num_rows)
                 {
+                    while($rows=$result1->fetch_assoc())
+                    {
             ?>
-            <tr>
-                <td><?php echo $rows['truck_no']; ?></td>
-                <td><?php echo $rows['area']; ?></td>
-                <td><?php echo $rows['status']; ?></td>
+                <tr>
+                    <td><?php echo $rows['street_name']; ?></td>
+                    <td class="status">Not Running</td>
             </tr>
             <?php
                 }
             ?>     
         </table>
-        <p>Add truck?</p>
-        <button>Add</button>
+        <div id="assign">
+            <p>Assign truck?</p>
+            <button onclick="assign()">Assign</button>
+        </div>
+        <form id="deassign" action="changedate.php" method="post" target="_self">
+           <p>Deassign truck?</p>
+           <input type="submit" name="deassign" value="Deassign" onclick="deassign()">
+        </form>
+        <?php
+            }
+            else
+            {
+                while($rows=$result2->fetch_assoc())
+                {
+            ?>
+            <tr>
+                <td><?php echo $rows['street_name']; ?></td>
+                <td >Completed</td>
+            </tr>
+            <?php
+                }
+            ?> 
+            </table>
+            <?php
+                }
+            ?>
     </div>
+    <script>
+        function assign(){
+            document.getElementById("assign").style="display:none";
+            document.getElementById("deassign").style="display:block";
+            var st=document.getElementsByClassName("status");
+            for(var i=0; i<st.length; i++)
+            {
+                st[i].innerHTML= "Running";
+            }
+        }
+    </script>
 </body>

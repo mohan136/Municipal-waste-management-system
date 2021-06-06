@@ -72,3 +72,6 @@ function check_details(){
         return false;
     }
 }
+function change(){
+    window.location.href = "home.php";
+}

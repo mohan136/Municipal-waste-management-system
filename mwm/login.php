@@ -1,5 +1,5 @@
 <?php
-   $con=mysqli_connect('localhost','root','Charan@31','municipal_waste_management');
+   $con=mysqli_connect('localhost','root','Rohitha@123','municipal_waste_management');
    if(isset($_POST["user"])){
    $user=$_POST["user"];
    $pass=$_POST["pass"];
