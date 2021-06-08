@@ -1,5 +1,5 @@
 <?php
-    $mysqli=new mysqli('localhost','root','Rohitha@123','municipal_waste_management');
+    $mysqli=new mysqli('localhost','root','','municipal_waste_management');
     if ($mysqli->connect_error) {
         die('Connect Error (' . 
         $mysqli->connect_errno . ') '. 

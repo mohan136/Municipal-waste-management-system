@@ -1,5 +1,5 @@
 <?php
-   $con=mysqli_connect('localhost','root','Rohitha@123','municipal_waste_management');
+   $con=mysqli_connect('localhost','root','','municipal_waste_management');
    if(isset($_POST["c_name"])){
    $c_name=$_POST["c_name"];
    $c_aadhaar=$_POST["c_aadhaar"];
@@ -12,7 +12,7 @@
        $query="select * from complaints where location='$area'";
        $x=mysqli_num_rows(mysqli_query($con,$query));
        if(!$x){
-         $sql="insert into complaints values('$c_name','$c_aadhaar','$c_phn','$area')";
+         $sql="insert into complaints values('$c_name','$c_aadhaar','$c_phn','$area','Not Running',current_date)";
          mysqli_query($con,$sql);
        }
          echo '<script>alert("Your request is recorded, we will solve it ASAP");</script>';
@@ -58,7 +58,11 @@
             width:250px;
             border-radius:5px;
         }
-        
+        input{
+            height: 30px;
+            width:250px;
+            border-radius:5px;
+        }
         input[type=submit]{
             margin-left:10px;
             margin-top:10px;

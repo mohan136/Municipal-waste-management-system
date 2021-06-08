@@ -1,5 +1,5 @@
 <?php
-    $mysqli=new mysqli('localhost','root','Rohitha@123','municipal_waste_management');
+    $mysqli=new mysqli('localhost','root','','municipal_waste_management');
     if ($mysqli->connect_error) {
         die('Connect Error (' . 
         $mysqli->connect_errno . ') '. 
@@ -12,6 +12,7 @@
 <!DOCTYPE html>
 <head>
     <title>Streets Information</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body{
             height:100%;
@@ -35,10 +36,16 @@
         td{
             font-weight:lighter;
         }
+        i{
+            float:right;
+            font-size:30px;
+            margin-right:50px;
+        }
     </style>
 </head>
 <body>
     <div>
+        <a href="home.php"><i class="fa fa-sign-out">Logout</i></a>
         <table>
             <tr>
                 <th>Street name</th>

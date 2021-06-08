@@ -1,12 +1,14 @@
 <?php
-    $mysqli=new mysqli('localhost','root','Rohitha@123','municipal_waste_management');
+    $mysqli=new mysqli('localhost','root','','municipal_waste_management');
     if ($mysqli->connect_error) {
         die('Connect Error (' . 
         $mysqli->connect_errno . ') '. 
         $mysqli->connect_error);
     }
-    $sql="select street_name from street_info where next_date = current_date";
+    $sql="select street_name,status from street_info where next_date = current_date";
     $result1=$mysqli->query($sql);
+    $sql="select status from street_info where next_date=current_date limit 1";
+    $status1=$mysqli->query($sql);
     $sql="select street_name from street_info where next_date = date_add(current_date ,interval 7 day)";
     $result2 = $mysqli->query($sql);
     $mysqli->close();
@@ -14,6 +16,7 @@
 <!DOCTYPE html>
 <head>
     <title>Truck status</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body{
             height:100%;
@@ -48,13 +51,16 @@
             width:70px;
             height:20px;
         }
-        #deassign{
-            display:none;
+        i{
+            float:right;
+            font-size:30px;
+            margin-right:50px;
         }
     </style>
 </head>
 <body>
     <div>
+    <a href="home.php"><i class="fa fa-sign-out">Logout</i></a>
         <table>
             <tr>
                 <th>Area</th>
@@ -68,21 +74,30 @@
             ?>
                 <tr>
                     <td><?php echo $rows['street_name']; ?></td>
-                    <td class="status">Not Running</td>
+                    <td><?php echo $rows['status']; ?></td>
             </tr>
             <?php
                 }
             ?>     
         </table>
-        <div id="assign">
-            <p>Assign truck?</p>
-            <button onclick="assign()">Assign</button>
-        </div>
-        <form id="deassign" action="changedate.php" method="post" target="_self">
-           <p>Deassign truck?</p>
-           <input type="submit" name="deassign" value="Deassign" onclick="deassign()">
+        <?php
+            $srow=$status1->fetch_assoc();
+            if($srow['status']=='Not Running'){
+        ?>
+        <form id="assign" action="changestatus.php" method="post" target="_self">
+           <p>Assign truck?</p>
+           <input type="submit" name="assign" value="Assign">
         </form>
         <?php
+            }
+            else{
+        ?>
+        <form id="deassign" action="changedate.php" method="post" target="_self">
+           <p>Deassign truck?</p>
+           <input type="submit" name="deassign" value="Deassign">
+        </form>
+        <?php
+            }
             }
             else
             {
@@ -101,15 +116,4 @@
                 }
             ?>
     </div>
-    <script>
-        function assign(){
-            document.getElementById("assign").style="display:none";
-            document.getElementById("deassign").style="display:block";
-            var st=document.getElementsByClassName("status");
-            for(var i=0; i<st.length; i++)
-            {
-                st[i].innerHTML= "Running";
-            }
-        }
-    </script>
 </body>

@@ -1,5 +1,5 @@
 <?php
-   $con=mysqli_connect('localhost','root','Rohitha@123','municipal_waste_management');
+   $con=mysqli_connect('localhost','root','','municipal_waste_management');
    if(isset($_POST["user"])){
    $user=$_POST["user"];
    $pass=$_POST["pass"];
@@ -27,6 +27,7 @@
     </head>
     <body>
         <div id="login" name="login">
+        <a href="home.php"><i style="margin-left:40px; font-size:40px;margin-top:50px;"class="fa fa-arrow-circle-left" ></i></a>
             <div id="loginlayout">
                 <form id="form" action="login.php" method="POST" onsubmit="return validateForm();" target="_self">
                     <h1>Login</h1>
